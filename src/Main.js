@@ -9,7 +9,7 @@ export default function MainRoute(props) {
       <Folder key={folder.id} id={folder.id} name={folder.name} />)
 
   const noteList = props.notes.map(note =>
-      <Note key={note.id} name={note.name} modified={note.modified}/>)
+      <Note key={note.id} id={note.id} name={note.name} modified={note.modified}/>)
   
   
   return (

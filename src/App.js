@@ -3,7 +3,7 @@ import dummyStore from './dummy-store';
 import { Route } from 'react-router-dom';
 import MainRoute from './Main';
 import FolderRoute from './FolderRoute';
-import NoteRoute from './Note';
+import NoteRoute from './NoteRoute';
 import Header from './Header';
 
 class App extends Component {
@@ -24,8 +24,8 @@ class App extends Component {
         <Route exact path='/'
           render={
             () => <MainRoute 
-            folders={this.state.dummyStore.folders} 
-            notes={this.state.dummyStore.notes} 
+              folders={this.state.dummyStore.folders} 
+              notes={this.state.dummyStore.notes} 
             />
           }
         />
@@ -33,11 +33,11 @@ class App extends Component {
         <Route exact path='/folder/:folderId'
           render={
             (props) => <FolderRoute 
-            folders={this.state.dummyStore.folders}
-            notes={this.state.dummyStore.notes}
-            match={props.match}
-            history={props.history}
-            location={props.location}
+              folders={this.state.dummyStore.folders}
+              notes={this.state.dummyStore.notes}
+              match={props.match}
+              history={props.history}
+              location={props.location}
             />
           }
         />
@@ -45,11 +45,11 @@ class App extends Component {
         <Route exact path='/note/:noteId'
           render={
             (props) => <NoteRoute
-            folders={this.state.dummyStore.folders}
-            notes={this.state.dummyStore.notes}
-            match={props.match}
-            history={props.history}
-            location={props.location}
+              folders={this.state.dummyStore.folders}
+              notes={this.state.dummyStore.notes}
+              match={props.match}
+              history={props.history}
+              location={props.location}
             />
           }
         />

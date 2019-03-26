@@ -14,7 +14,7 @@ export default function FolderRoute(props) {
 
 
   const noteList = props.notes.filter(note => `/folder/${note.folderId}` === props.match.url)
-      .map(note => <Note key={note.id} name={note.name} modified={note.modified}/>)
+      .map(note => <Note key={note.id} id={note.id} name={note.name} modified={note.modified}/>)
   
   
   return (
