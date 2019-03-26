@@ -4,12 +4,17 @@ import Note from './Note';
 
 export default function FolderRoute(props) {
 
+  const folderList = props.folders.map((folder) => {
+    if (`/folder/${folder.id}` === props.match.url) {
+      return <Folder selected={true} key={folder.id} id={folder.id} name={folder.name} />
+    } else { 
+      return <Folder key={folder.id} id={folder.id} name={folder.name} />
+    }
+})
 
-  const folderList = props.folders.map(folder => 
-      <Folder key={folder.id} id={folder.id} name={folder.name} />)
 
-  const noteList = props.notes.map(note =>
-      <Note key={note.id} name={note.name} modified={note.modified}/>)
+  const noteList = props.notes.filter(note => `/folder/${note.folderId}` === props.match.url)
+      .map(note => <Note key={note.id} name={note.name} modified={note.modified}/>)
   
   
   return (

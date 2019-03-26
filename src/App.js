@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import dummyStore from './dummy-store';
 import { Route } from 'react-router-dom';
 import MainRoute from './Main';
-import FolderRoute from './Folder';
+import FolderRoute from './FolderRoute';
 import NoteRoute from './Note';
 import Header from './Header';
 
