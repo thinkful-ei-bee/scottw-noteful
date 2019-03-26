@@ -15,7 +15,7 @@ export default function NoteRoute(props) {
   return (
     <>
       <div className="sidebar">
-        <button className='go-back-button'>Go back</button>
+        <button className='go-back-button' onClick={() => props.history.goBack()}>Go back</button>
         <h2>{currentFolder.name}</h2>
       </div>
       <main role="main" className="main">
