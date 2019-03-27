@@ -1,13 +1,18 @@
 import React, {Component} from 'react';
 import Note from './Note';
+import StateContext from './StateContext';
 
 export default class NoteRoute extends Component {
+
+  static contextType = StateContext;
   
   render(props) {
- 
-    let currentNote = this.props.notes.find(note => `/note/${note.id}` === this.props.match.url);
 
-    const currentFolder = this.props.folders.find(folder=> folder.id === currentNote.folderId);
+    const {folders, notes} = this.context;
+ 
+    let currentNote = notes.find(note => `/note/${note.id}` === this.props.match.url);
+
+    const currentFolder = folders.find(folder=> folder.id === currentNote.folderId);
 
     return (
       <>

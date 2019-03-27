@@ -5,6 +5,7 @@ import MainRoute from './Main';
 import FolderRoute from './FolderRoute';
 import NoteRoute from './NoteRoute';
 import Header from './Header';
+import StateContext from './StateContext';
 
 class App extends Component {
   constructor(props){
@@ -16,45 +17,32 @@ class App extends Component {
     }
   }
   render() {
+
     return (
-      <div className="App">
 
-        <Header />
+      <StateContext.Provider value={{
+        folders: this.state.dummyStore.folders,
+        notes: this.state.dummyStore.notes,
+      }}>
 
-        <Route exact path='/'
-          render={
-            () => <MainRoute 
-              folders={this.state.dummyStore.folders} 
-              notes={this.state.dummyStore.notes} 
-            />
-          }
-        />
+        <div className="App">
 
-        <Route exact path='/folder/:folderId'
-          render={
-            (props) => <FolderRoute 
-              folders={this.state.dummyStore.folders}
-              notes={this.state.dummyStore.notes}
-              match={props.match}
-              history={props.history}
-              location={props.location}
-            />
-          }
-        />
+          <Header />
 
-        <Route exact path='/note/:noteId'
-          render={
-            (props) => <NoteRoute
-              folders={this.state.dummyStore.folders}
-              notes={this.state.dummyStore.notes}
-              match={props.match}
-              history={props.history}
-              location={props.location}
-            />
-          }
-        />
+          <Route exact path='/'
+            component={MainRoute}
+          />
 
-      </div>
+          <Route exact path='/folder/:folderId'
+            component={FolderRoute}
+          />
+
+          <Route exact path='/note/:noteId'
+            component={NoteRoute}
+          />
+
+        </div>
+      </StateContext.Provider>
     );
   }
 }

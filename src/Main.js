@@ -1,15 +1,20 @@
 import React, {Component} from 'react';
 import Folder from './Folder';
 import Note from './Note';
+import StateContext from './StateContext';
 
 export default class MainRoute extends Component {
+
+  static contextType = StateContext;
   
   render(props) {
+    
+    const {folders, notes} = this.context;
 
-    const folderList = this.props.folders.map(folder => 
+    const folderList = folders.map(folder => 
         <Folder key={folder.id} id={folder.id} name={folder.name} />)
 
-    const noteList = this.props.notes.map(note =>
+    const noteList = notes.map(note =>
         <Note key={note.id} id={note.id} name={note.name} modified={note.modified}/>)
     
     

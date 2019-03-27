@@ -1,10 +1,15 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './Folder.css';
+// import StateContext from './StateContext';
 
 export default class Folder extends Component {
 
+  // static contextType = StateContext;
+
   render(props){
+
+    // const {folders, notes} = this.context;
 
     const element = this.props.selected ? 
       <div className='selected-folder-div'>
