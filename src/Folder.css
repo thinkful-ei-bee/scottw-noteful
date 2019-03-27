@@ -1,0 +1,11 @@
+.folder-div {
+  color: white;
+  border: grey solid 1px;
+  padding: 10px;
+}
+
+.selected-folder-div {
+  color: white;
+  border: #52D1DC solid 2px;
+  padding: 10px;
+}
