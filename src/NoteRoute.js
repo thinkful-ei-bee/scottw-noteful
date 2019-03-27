@@ -1,27 +1,25 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Note from './Note';
 
-export default function NoteRoute(props) {
- 
+export default class NoteRoute extends Component {
   
+  render(props) {
+ 
+    let currentNote = this.props.notes.find(note => `/note/${note.id}` === this.props.match.url);
 
-  let currentNote = props.notes.find(note => `/note/${note.id}` === props.match.url);
+    const currentFolder = this.props.folders.find(folder=> folder.id === currentNote.folderId);
 
-
-
-  const currentFolder = props.folders.find(folder=> folder.id === currentNote.folderId);
-
-
-  return (
-    <>
-      <div className="sidebar">
-        <button className='go-back-button' onClick={() => props.history.goBack()}>Go back</button>
-        <h2>{currentFolder.name}</h2>
-      </div>
-      <main role="main" className="main">
-        <Note key={currentNote.id} name={currentNote.name} modified={currentNote.modified}/>
-        <p>{currentNote.content}</p>
-      </main>
-    </>
-  );
+    return (
+      <>
+        <div className="sidebar">
+          <button className='go-back-button' onClick={() => this.props.history.goBack()}>Go back</button>
+          <h2>{currentFolder.name}</h2>
+        </div>
+        <main role="main" className="main">
+          <Note key={currentNote.id} name={currentNote.name} modified={currentNote.modified}/>
+          <p>{currentNote.content}</p>
+        </main>
+      </>
+    );
+  }
 }

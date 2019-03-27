@@ -30,7 +30,7 @@ body {
 }
 
 .App-header {
-  border: black solid 1px;
+  /* border: black solid 1px; */
   position: fixed;
   top: 0;
   left: 160px;
@@ -42,11 +42,16 @@ body {
 
 a {
   color: black;
+  text-decoration: none;
 }
 
 a:visited {
 
   color: black;
+}
+
+a:hover {
+  color: #52D1DC;
 }
 
 button {
