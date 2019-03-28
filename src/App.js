@@ -99,37 +99,41 @@ class App extends Component {
   }
 
 
-  handleAddFolder(event) {
-    event.preventDefault();
-    const newFolder = {
-      name: event.target['folder-name-input'].value,
-    }
-    fetch('http://localhost:9090/folders', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type':'application/json'
-      }),
-      body: JSON.stringify(newFolder)
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json()
-            .then(error => {
-              throw error
-            })
-        }
-        return res.json()
-      })
-        .then(data => {
-          console.log(data)
+  // handleAddFolder(event) {
+  //   event.preventDefault();
+  //   const newFolder = {
+  //     name: event.target['folder-name-input'].value,
+  //   }
+  //   fetch('http://localhost:9090/folders', {
+  //     method: 'POST',
+  //     headers: new Headers({
+  //       'Content-Type':'application/json'
+  //     }),
+  //     body: JSON.stringify(newFolder)
+  //   })
+  //     .then(res => {
+  //       if (!res.ok) {
+  //         return res.json()
+  //           .then(error => {
+  //             throw error
+  //           })
+  //       }
+  //       return res.json()
+  //     })
+  //       .then(data => {
+  //         console.log(data)
 
-          this.setState({folders: [...this.state.folders, data]})
-        })
-          .catch(err => {
-            //this.setState({error: err.message})
-            console.error(err);
-          })
-  } 
+  //         this.setState({folders: [...this.state.folders, data]})
+  //       })
+  //         .catch(err => {
+  //           //this.setState({error: err.message})
+  //           console.error(err);
+  //         })
+  // } 
+
+  addFolder(newFolder) {
+    this.setState({folders: [...this.state.folders, newFolder]})
+  }
 
   deleteNote(id) {
     const newNotes = this.state.notes.filter(note => note.id !== id)
@@ -147,7 +151,7 @@ class App extends Component {
         notes: this.state.notes,
         error: this.state.error,
         handleAddNote: this.handleAddNote.bind(this),
-        handleAddFolder: this.handleAddFolder.bind(this),
+        addFolder: this.addFolder.bind(this),
 
         deleteNote: this.deleteNote.bind(this),
       }}>
