@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import Folder from './Folder';
 import Note from './Note';
 import StateContext from './StateContext';
+import AddFolderButton from './addFolderButton';
+import AddNoteButton from './addNoteButton';
 
 export default class MainRoute extends Component {
 
@@ -22,11 +24,11 @@ export default class MainRoute extends Component {
       <>
         <div className="sidebar">
           {folderList}
-          <button className='add-folder-button'>Add folder</button>
+          <AddFolderButton />
         </div>
         <main role="main" className="main">
           {noteList}
-          <button className='add-note-button'>Add note</button>
+          <AddNoteButton folderUrl=''/>
         </main>
       </>
     );
