@@ -18,6 +18,16 @@ class App extends Component {
     }
   }
 
+
+  // body = {whatever}
+  // fetch('url', {
+  //   method: 'POST',
+  //   body: JSON.stringify(body),
+  //   headers: {
+  //     'Content-type': 'application/json'
+  //   }
+  // })
+
   componentDidMount() {
     Promise.all([
       fetch('http://localhost:9090/folders'),
@@ -121,6 +131,11 @@ class App extends Component {
           })
   } 
 
+  deleteNote(id) {
+    const newNotes = this.state.notes.filter(note => note.id !== id)
+    this.setState({notes: newNotes})
+  }
+
 
 
   render() {
@@ -133,6 +148,8 @@ class App extends Component {
         error: this.state.error,
         handleAddNote: this.handleAddNote.bind(this),
         handleAddFolder: this.handleAddFolder.bind(this),
+
+        deleteNote: this.deleteNote.bind(this),
       }}>
 
         <div className="App">

@@ -4,6 +4,8 @@ export default React.createContext({
   folders: [],
   notes: [],
   error: '',
-  handleAddNote: () => {},
-  handleAddFolder: () => {},
+  handleAddNote: (val) => {console.warn(`default handleAddNote received ${val}`)},
+  handleAddFolder: (val) => {console.warn(`default handleAddFolder received ${val}`)},
+
+  deleteNote: (val) => {console.warn(`default deleteNote received ${val}`)},
 })

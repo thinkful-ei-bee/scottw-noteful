@@ -29,6 +29,7 @@ export default class FolderRoute extends Component {
     return (
       <>
         <div className="sidebar">
+          <button className='go-back-button' onClick={() => this.props.history.goBack()}>Go back</button>
           {folderList}
           <AddFolderButton />
         </div>
