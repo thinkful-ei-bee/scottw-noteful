@@ -1,14 +1,69 @@
 import React, {Component} from 'react';
 import StateContext from './StateContext';
+import ValidationError from './ValidationError';
 
 export default class AddFolder extends Component {
 
   static contextType = StateContext;
 
+  state = {
+    name: '',
+    nameValid: false,
+    formValid: false,
+    validationMessages: {
+      name: '',
+    }
+  }
+
+  validateName(fieldValue) {
+    const fieldErrors = {...this.state.validationMessages};
+    let hasError = false;
+
+    const repeat = this.context.folders.find(folder => folder.name === fieldValue)
+
+    fieldValue = fieldValue.trim();
+    if(fieldValue.length === 0) {
+      fieldErrors.name = 'Name is required';
+      hasError = true;
+    } else if (fieldValue.length < 3) {
+      fieldErrors.name = 'Name must be at least 3 characters long';
+      hasError = true;
+    } else if (repeat) {
+      fieldErrors.name = `Folder '${repeat.name}' already exists`;
+      hasError = true;
+    } else {
+      fieldErrors.name = '';
+      hasError = false;
+    }
+    this.setState({
+      validationMessages: fieldErrors,
+      nameValid: !hasError
+    }, this.formValid );
+  }
+  //after checking on nameValid above, setting formValid 
+  formValid() {
+    this.setState({
+      formValid: this.state.nameValid
+    })
+  }
+
+  updateName(name) {
+    this.setState({name}, () => {this.validateName(name)});
+  }
+
+
+
+
+  // nameInput = React.createRef();
+
+ 
+
   handleAddFolder(event) {
     event.preventDefault();
     const newFolder = {
-      name: event.target['folder-name-input'].value,
+      //name: event.target['folder-name-input'].value,
+      //name: this.nameInput.current.value,
+      name: this.state.name
     }
     fetch('http://localhost:9090/folders', {
       method: 'POST',
@@ -31,7 +86,7 @@ export default class AddFolder extends Component {
           this.context.addFolder(data)
         })
           .catch(err => {
-            //this.setState({error: err.message})
+            this.context.addError(err);
             console.error(err);
           })
   } 
@@ -53,10 +108,13 @@ export default class AddFolder extends Component {
                 <label htmlFor='folder-name-input'>
                   Name
                 </label>
-                <input type='text' id='folder-name-input' />
+                <input type='text' id='folder-name-input' 
+                  onChange={event => this.updateName(event.target.value)}
+                />
               </div>
+              <ValidationError hasError={!this.state.nameValid} message={this.state.validationMessages.name} />
               <div className='buttons'>
-                <button type='submit'>
+                <button type='submit' disabled={!this.state.formValid}>
                   Add folder
                 </button>
               </div>

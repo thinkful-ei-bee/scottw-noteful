@@ -26,8 +26,9 @@ export default class Note extends Component {
         .then(data => {
           this.context.deleteNote(id);
         })
-          .catch(error => {
-            console.error(error)
+          .catch(err => {
+            this.context.addError(err);
+            console.error(err)
           })
   }
 
