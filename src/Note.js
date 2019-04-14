@@ -1,3 +1,5 @@
+//refactored for noteful-app
+
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './Note.css';
@@ -8,7 +10,7 @@ export default class Note extends Component {
   static contextType = StateContext;
 
   handleDeleteNote(id) {
-    fetch(`http://localhost:9090/notes/${id}`, {
+    fetch(`http://localhost:8000/api/notes/${id}`, {
       method: 'DELETE',
       headers: new Headers({
         'Content-Type': `application/json`
@@ -21,7 +23,8 @@ export default class Note extends Component {
               throw error
             })
         }
-        return res.json()
+        //removing this line fixed the "unexpected end of json" problem
+       // return res.json()
       })
         .then(data => {
           this.context.deleteNote(id);

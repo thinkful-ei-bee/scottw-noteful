@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, {Component} from 'react';
 import StateContext from './StateContext';
 import ValidationError from './ValidationError';
@@ -7,7 +9,7 @@ export default class AddFolder extends Component {
   static contextType = StateContext;
 
   state = {
-    name: '',
+    folder_name: '',
     nameValid: false,
     formValid: false,
     validationMessages: {
@@ -19,7 +21,7 @@ export default class AddFolder extends Component {
     const fieldErrors = {...this.state.validationMessages};
     let hasError = false;
 
-    const repeat = this.context.folders.find(folder => folder.name === fieldValue)
+    const repeat = this.context.folders.find(folder => folder.folder_name === fieldValue)
 
     fieldValue = fieldValue.trim();
     if(fieldValue.length === 0) {
@@ -29,7 +31,7 @@ export default class AddFolder extends Component {
       fieldErrors.name = 'Name must be at least 3 characters long';
       hasError = true;
     } else if (repeat) {
-      fieldErrors.name = `Folder '${repeat.name}' already exists`;
+      fieldErrors.name = `Folder '${repeat.folder_name}' already exists`;
       hasError = true;
     } else {
       fieldErrors.name = '';
@@ -47,8 +49,8 @@ export default class AddFolder extends Component {
     })
   }
 
-  updateName(name) {
-    this.setState({name}, () => {this.validateName(name)});
+  updateName(folder_name) {
+    this.setState({folder_name}, () => {this.validateName(folder_name)});
   }
 
 
@@ -63,9 +65,9 @@ export default class AddFolder extends Component {
     const newFolder = {
       //name: event.target['folder-name-input'].value,
       //name: this.nameInput.current.value,
-      name: this.state.name
+      folder_name: this.state.folder_name
     }
-    fetch('http://localhost:9090/folders', {
+    fetch('http://localhost:8000/api/folders', {
       method: 'POST',
       headers: new Headers({
         'Content-Type':'application/json'

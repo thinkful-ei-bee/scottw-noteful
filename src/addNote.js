@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, {Component} from 'react';
 import StateContext from './StateContext';
 import ValidationError from './ValidationError'
@@ -7,15 +9,15 @@ export default class AddNote extends Component {
   static contextType = StateContext;
 
   state = {
-    currentFolder: {name: 'Select a folder', id: ''},
+    currentFolder: {folder_name: 'Select a folder', id: ''},
     currentFolderNotes: [],
-    selectedFolder: {name: 'Select a folder', id: ''},
+    selectedFolder: {folder_name: 'Select a folder', id: ''},
     folderOptions: [],
-    name: '',
+    note_name: '',
     nameValid: false,
     content: '',
     contentValid: false,
-    folderId: '',
+    folder_id: '',
     folderIdValid: false,
     validationMessages: {
       name: '',
@@ -34,9 +36,10 @@ export default class AddNote extends Component {
       const otherFolders = this.context.folders.filter(folder => folder.id !== currentFolder.id)
       this.setState({
         currentFolder,
-        folderId: currentFolder.id,
+        folder_id: currentFolder.id,
         folderOptions: otherFolders,
         selectedFolder: currentFolder,
+        folderIdValid: true,
       });
     } else {
       this.setState({folderOptions: this.context.folders});
@@ -48,9 +51,9 @@ export default class AddNote extends Component {
     const fieldErrors = {...this.state.validationMessages};
     let hasError = false;
 
-     const folderNotes = this.context.notes.filter(note => note.folderId === this.state.folderId);
+     const folderNotes = this.context.notes.filter(note => note.folder_id === this.state.folder_id);
 
-     const repeat = folderNotes.find(note => note.name === fieldValue)
+     const repeat = folderNotes.find(note => note.note_name === fieldValue)
 
     fieldValue = fieldValue.trim();
     if(fieldValue.length === 0) {
@@ -60,7 +63,7 @@ export default class AddNote extends Component {
       fieldErrors.name = 'Name must be at least 3 characters long';
       hasError = true;
     } else if (repeat) {
-      fieldErrors.name = `Note '${fieldValue}' already exists in Folder '${this.state.selectedFolder.name}'`;
+      fieldErrors.name = `Note '${fieldValue}' already exists in Folder '${this.state.selectedFolder.folder_name}'`;
       hasError = true;
     } else {
       fieldErrors.name = '';
@@ -115,13 +118,13 @@ export default class AddNote extends Component {
     })
   }
 
-  updateName(name) {
-    this.setState({name}, () => {this.validateName(name)});
+  updateName(note_name) {
+    this.setState({note_name}, () => {this.validateName(note_name)});
   }
 
-  updateFolderId(folderId) {
-    const selectedFolder = this.context.folders.find(folder => folder.id === folderId);
-    this.setState({folderId, selectedFolder}, () => {this.validateFolderId(folderId)});
+  updateFolderId(folder_id) {
+    const selectedFolder = this.context.folders.find(folder => folder.id === folder_id);
+    this.setState({folder_id, selectedFolder}, () => {this.validateFolderId(folder_id)});
   }
 
   updateContent(content) {
@@ -133,9 +136,9 @@ export default class AddNote extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.validateFolderId(this.state.folderId);
+    this.validateFolderId(this.state.folder_id);
     this.validateContent(this.state.content);
-    this.validateName(this.state.name);
+    this.validateName(this.state.note_name);
     if(this.state.formValid) {
       this.handleAddNote();
       this.props.history.push('/');
@@ -146,11 +149,12 @@ export default class AddNote extends Component {
   handleAddNote() {
     // event.preventDefault()
     const newNote = {
-      name: this.state.name,
-      folderId: this.state.folderId,
+      note_name: this.state.note_name,
+      folder_id: this.state.folder_id,
       content: this.state.content,
+      //timestamp?
     }
-    fetch('http://localhost:9090/notes', {
+    fetch('http://localhost:8000/api/notes', {
       method: 'POST',
       headers: new Headers({
         'Content-Type':'application/json'
@@ -186,7 +190,7 @@ export default class AddNote extends Component {
       <>
         <div className="sidebar">
           <button className='go-back-button' onClick={() => this.props.history.goBack()}>Go back</button>
-          <h2>{this.state.currentFolder.name}</h2>
+          <h2>{this.state.currentFolder.folder_name}</h2>
         </div>
         <main role="main" className="main">
           <section className='addNote'>
@@ -215,10 +219,10 @@ export default class AddNote extends Component {
                     Folder
                   </label>
                   <select id='note-folder-select' onChange={event => this.updateFolderId(event.target.value)}>
-                    <option value={this.state.currentFolder.id}>{this.state.currentFolder.name}</option>
+                    <option value={this.state.currentFolder.id}>{this.state.currentFolder.folder_name}</option>
                     {this.state.folderOptions.map(folder =>
                       <option key={folder.id} value={folder.id}>
-                        {folder.name}
+                        {folder.folder_name}
                       </option>
                     )}
                   </select>

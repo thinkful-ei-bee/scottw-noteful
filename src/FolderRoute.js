@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, {Component} from 'react';
 import Folder from './Folder';
 import Note from './Note';
@@ -15,15 +17,15 @@ export default class FolderRoute extends Component {
 
     const folderList = folders.map((folder) => {
       if (`/folder/${folder.id}` === this.props.match.url) {
-        return <Folder selected={true} key={folder.id} id={folder.id} name={folder.name} />
+        return <Folder selected={true} key={folder.id} id={folder.id} name={folder.folder_name} />
       } else { 
-        return <Folder key={folder.id} id={folder.id} name={folder.name} />
+        return <Folder key={folder.id} id={folder.id} name={folder.folder_name} />
       }
     })
 
 
-    const noteList = notes.filter(note => `/folder/${note.folderId}` === this.props.match.url)
-        .map(note => <Note key={note.id} id={note.id} name={note.name} modified={note.modified}/>)
+    const noteList = notes.filter(note => `/folder/${note.folder_id}` === this.props.match.url)
+        .map(note => <Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/>)
     
     
     return (

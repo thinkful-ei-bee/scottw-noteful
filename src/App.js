@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import MainRoute from './Main';
@@ -30,8 +32,8 @@ class App extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:9090/folders'),
-      fetch('http://localhost:9090/notes'),
+      fetch('http://localhost:8000/api/folders'),
+      fetch('http://localhost:8000/api/notes'),
     ])
       .then(([folderRes, noteRes]) => {
         if (!folderRes.ok) {
