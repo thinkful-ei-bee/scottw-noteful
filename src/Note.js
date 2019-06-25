@@ -10,7 +10,7 @@ export default class Note extends Component {
   static contextType = StateContext;
 
   handleDeleteNote(id) {
-    fetch(`http://localhost:8000/api/notes/${id}`, {
+    fetch(`https://powerful-bastion-56224.herokuapp.com/api/notes/${id}`, {
       method: 'DELETE',
       headers: new Headers({
         'Content-Type': `application/json`

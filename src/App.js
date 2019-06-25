@@ -32,8 +32,8 @@ class App extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:8000/api/folders'),
-      fetch('http://localhost:8000/api/notes'),
+      fetch('https://powerful-bastion-56224.herokuapp.com/api/folders'),
+      fetch('https://powerful-bastion-56224.herokuapp.com/api/notes'),
     ])
       .then(([folderRes, noteRes]) => {
         if (!folderRes.ok) {

@@ -67,7 +67,7 @@ export default class AddFolder extends Component {
       //name: this.nameInput.current.value,
       folder_name: this.state.folder_name
     }
-    fetch('http://localhost:8000/api/folders', {
+    fetch('https://powerful-bastion-56224.herokuapp.com/api/folders', {
       method: 'POST',
       headers: new Headers({
         'Content-Type':'application/json'

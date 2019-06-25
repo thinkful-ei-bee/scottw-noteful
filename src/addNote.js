@@ -154,7 +154,7 @@ export default class AddNote extends Component {
       content: this.state.content,
       //timestamp?
     }
-    fetch('http://localhost:8000/api/notes', {
+    fetch('https://powerful-bastion-56224.herokuapp.com/api/notes', {
       method: 'POST',
       headers: new Headers({
         'Content-Type':'application/json'
