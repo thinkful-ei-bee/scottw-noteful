@@ -7,6 +7,8 @@ import StateContext from './StateContext';
 import AddFolderButton from './addFolderButton';
 import AddNoteButton from './addNoteButton';
 
+import Error from  './Error';
+
 export default class MainRoute extends Component {
 
   static contextType = StateContext;
@@ -19,7 +21,7 @@ export default class MainRoute extends Component {
         <Folder key={folder.id} id={folder.id} name={folder.folder_name} />)
 
     const noteList = notes.map(note =>
-        <Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/>)
+        <Error><Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/></Error>)
     
     
     return (
