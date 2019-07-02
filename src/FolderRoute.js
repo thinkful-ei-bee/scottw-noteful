@@ -6,6 +6,7 @@ import Note from './Note';
 import StateContext from './StateContext';
 import AddFolderButton from './addFolderButton';
 import AddNoteButton from './addNoteButton';
+import Error from './Error';
 
 export default class FolderRoute extends Component {
 
@@ -25,7 +26,7 @@ export default class FolderRoute extends Component {
 
 
     const noteList = notes.filter(note => `/folder/${note.folder_id}` === this.props.match.url)
-        .map(note => <Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/>)
+        .map(note => <Error><Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/></Error>)
     
     
     return (

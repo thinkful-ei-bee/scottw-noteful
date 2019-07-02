@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import './Note.css';
 import StateContext from './StateContext';
 
+import Error from './Error';
+
 export default class Note extends Component {
 
   static contextType = StateContext;
@@ -41,7 +43,7 @@ export default class Note extends Component {
 
     const noteName = this.props.id ? (
       <Link to={`/note/${this.props.id}`}>
-        <h2>{this.props.name}</h2>
+        <h2>{this.proops.name}</h2>
       </Link>
       ):
       (<h2>{this.props.name}</h2>)
