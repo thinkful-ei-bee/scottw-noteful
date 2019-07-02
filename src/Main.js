@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, {Component} from 'react';
 import Folder from './Folder';
 import Note from './Note';
@@ -14,10 +16,10 @@ export default class MainRoute extends Component {
     const {folders, notes} = this.context;
 
     const folderList = folders.map(folder => 
-        <Folder key={folder.id} id={folder.id} name={folder.name} />)
+        <Folder key={folder.id} id={folder.id} name={folder.folder_name} />)
 
     const noteList = notes.map(note =>
-        <Note key={note.id} id={note.id} name={note.name} modified={note.modified}/>)
+        <Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/>)
     
     
     return (

@@ -1,3 +1,5 @@
+//refactored for noteful-server
+
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import MainRoute from './Main';
@@ -30,8 +32,8 @@ class App extends Component {
 
   componentDidMount() {
     Promise.all([
-      fetch('http://localhost:9090/folders'),
-      fetch('http://localhost:9090/notes'),
+      fetch('https://powerful-bastion-56224.herokuapp.com/api/folders'),
+      fetch('https://powerful-bastion-56224.herokuapp.com/api/notes'),
     ])
       .then(([folderRes, noteRes]) => {
         if (!folderRes.ok) {
@@ -58,78 +60,22 @@ class App extends Component {
           })
         })
           .catch(err => {
-            this.setState({error: err.message});
+            this.addError(err);
             console.error(err);
           })
   }
 
-
-  handleAddNote(event) {
-    event.preventDefault()
-    const newNote = {
-      name: event.target['note-name-input'].value,
-      folderId: event.target['note-folder-select'].value,
-      content: event.target['note-content-input'].value,
-    }
-    fetch('http://localhost:9090/notes', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type':'application/json'
-      }),
-      body: JSON.stringify(newNote)
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json()
-            .then(error => {
-              throw error
-            })
-        }
-        return res.json()
-      })
-        .then(data => {
-          console.log(data)
-
-          this.setState({notes: [...this.state.notes, data]})
-        })
-          .catch(err => {
-            //this.setState({error: err.message})
-            console.error(err);
-          })
+  addError(err) {
+    this.setState({error: err.message})
   }
 
+  addNote(newNote) {
+    this.setState({notes: [...this.state.notes, newNote]})
+  }
 
-  handleAddFolder(event) {
-    event.preventDefault();
-    const newFolder = {
-      name: event.target['folder-name-input'].value,
-    }
-    fetch('http://localhost:9090/folders', {
-      method: 'POST',
-      headers: new Headers({
-        'Content-Type':'application/json'
-      }),
-      body: JSON.stringify(newFolder)
-    })
-      .then(res => {
-        if (!res.ok) {
-          return res.json()
-            .then(error => {
-              throw error
-            })
-        }
-        return res.json()
-      })
-        .then(data => {
-          console.log(data)
-
-          this.setState({folders: [...this.state.folders, data]})
-        })
-          .catch(err => {
-            //this.setState({error: err.message})
-            console.error(err);
-          })
-  } 
+  addFolder(newFolder) {
+    this.setState({folders: [...this.state.folders, newFolder]})
+  }
 
   deleteNote(id) {
     const newNotes = this.state.notes.filter(note => note.id !== id)
@@ -146,10 +92,10 @@ class App extends Component {
         folders: this.state.folders,
         notes: this.state.notes,
         error: this.state.error,
-        handleAddNote: this.handleAddNote.bind(this),
-        handleAddFolder: this.handleAddFolder.bind(this),
-
+        addNote: this.addNote.bind(this),
+        addFolder: this.addFolder.bind(this),
         deleteNote: this.deleteNote.bind(this),
+        addError: this.addError.bind(this),
       }}>
 
         <div className="App">
