@@ -6,7 +6,8 @@ import Note from './Note';
 import StateContext from './StateContext';
 import AddFolderButton from './addFolderButton';
 import AddNoteButton from './addNoteButton';
-import Error from './Error';
+import NoteError from './NoteError';
+import FolderError from './FolderError';
 
 export default class FolderRoute extends Component {
 
@@ -18,15 +19,15 @@ export default class FolderRoute extends Component {
 
     const folderList = folders.map((folder) => {
       if (`/folder/${folder.id}` === this.props.match.url) {
-        return <Folder selected={true} key={folder.id} id={folder.id} name={folder.folder_name} />
+        return <FolderError><Folder selected={true} key={folder.id} id={folder.id} name={folder.folder_name} /></FolderError>
       } else { 
-        return <Folder key={folder.id} id={folder.id} name={folder.folder_name} />
+        return <FolderError><Folder key={folder.id} id={folder.id} name={folder.folder_name} /></FolderError>
       }
     })
 
 
     const noteList = notes.filter(note => `/folder/${note.folder_id}` === this.props.match.url)
-        .map(note => <Error><Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/></Error>)
+        .map(note => <NoteError><Note key={note.id} id={note.id} name={note.note_name} modified={note.modified}/></NoteError>)
     
     
     return (

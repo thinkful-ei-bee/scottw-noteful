@@ -4,8 +4,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './Note.css';
 import StateContext from './StateContext';
-
-import Error from './Error';
+import PropTypes from 'prop-types';
 
 export default class Note extends Component {
 
@@ -60,3 +59,8 @@ export default class Note extends Component {
     );
   }
 }
+
+Note.propTypes = {
+  name: PropTypes.string,
+  id: PropTypes.number.isRequired 
+};

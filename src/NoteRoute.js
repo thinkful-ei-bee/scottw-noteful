@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import Note from './Note';
 import StateContext from './StateContext';
-import Error from './Error';
+import NoteError from './NoteError';
 
 export default class NoteRoute extends Component {
 
@@ -24,7 +24,7 @@ export default class NoteRoute extends Component {
           <h2>{currentFolder.folder_name}</h2>
         </div>
         <main role="main" className="main">
-          <Error><Note key={currentNote.id} name={currentNote.note_name} modified={currentNote.modified}/></Error>
+          <NoteError><Note key={currentNote.id} name={currentNote.note_name} modified={currentNote.modified}/></NoteError>
           <p>{currentNote.content}</p>
         </main>
       </>

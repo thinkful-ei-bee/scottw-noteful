@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import './Folder.css';
 // import StateContext from './StateContext';
+import PropTypes from 'prop-types';
 
 export default class Folder extends Component {
 
@@ -30,3 +31,8 @@ export default class Folder extends Component {
     );
   }
 }
+
+Folder.propTypes = {
+  name: PropTypes.string,
+  id: PropTypes.number.isRequired 
+};
